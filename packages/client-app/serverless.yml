@@ -1,0 +1,64 @@
+# serverless.yml
+service: japanese-flashcards-client
+
+provider:
+  name: aws
+  stage: beta
+  region: us-west-2
+  runtime: nodejs14.x
+  memorySize: 512
+  timeout: 10
+  versionFunctions: false
+
+plugins:
+  - serverless-s3-sync
+
+package:
+  patterns:
+    - build/**
+    - '!src/**'
+    - '!public/**'
+    - '!yarn.lock'
+    - '!README.md'
+    - '!tsconfig.json'
+
+custom:
+  siteName: ${sls:stage}-${self:service}.com
+  s3Sync:
+    - bucketName: ${self:custom.siteName}
+      localDir: build
+
+resources:
+  Resources:
+    ## Specifying the S3 Bucket
+    StaticSite:
+      Type: AWS::S3::Bucket
+      Properties:
+        AccessControl: PublicRead
+        BucketName: ${self:custom.siteName}
+        WebsiteConfiguration:
+          IndexDocument: index.html
+          ErrorDocument: index.html
+
+    StaticSiteS3BucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket:
+          Ref: StaticSite
+        PolicyDocument:
+          Statement:
+            - Sid: PublicReadGetObject
+              Effect: Allow
+              Principal: "*"
+              Action:
+              - s3:GetObject
+              Resource:
+                Fn::Join: [
+                  "", [
+                    "arn:aws:s3:::",
+                    {
+                      "Ref": "StaticSite"
+                    },
+                    "/*"
+                  ]
+                ]

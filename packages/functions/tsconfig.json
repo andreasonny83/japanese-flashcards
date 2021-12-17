@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "commonjs",
+    "lib": ["ESNext", "ES2020"],
+    "noImplicitAny": false,
+    "outDir": "./dist",
+    "strict": true,
+    "types": ["node"],
+    "esModuleInterop": true,
+    "inlineSourceMap": false,
+    "sourceMap": false,
+    "declaration": false,
+    "declarationMap": false
+  },
+  "include": ["src"]
+}

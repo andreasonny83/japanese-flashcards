@@ -1,0 +1,110 @@
+# serverless.yml
+frameworkVersion: '^2.66.1'
+
+service: japanese-flashcards-functions
+
+provider:
+  name: aws
+  stage: dev
+  region: us-west-2
+  runtime: nodejs14.x
+  memorySize: 512
+  timeout: 10
+  versionFunctions: false
+  tracing:
+    lambda: false # optional, enables tracing for all functions (can be true (true equals 'Active') 'Active' or 'PassThrough')
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - polly:SynthesizeSpeech
+      Resource: [
+        '*'
+      ]
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+      Resource:
+        - Fn::GetAtt: [ FlashcardsTable, Arn ]
+  environment:
+    USERS_TABLE: ${self:custom.tableName}
+
+plugins:
+  - serverless-offline
+  - serverless-plugin-typescript
+  - serverless-dynamodb-local
+
+package:
+  patterns:
+    - src/**
+    - '!.build/**'
+    - '!dist/**'
+    - '!yarn.lock'
+    - '!README.md'
+    - '!tsconfig.json'
+
+custom:
+  tableName: ${sls:stage}-${self:service}-table
+
+resources:
+  Resources:
+    FlashcardsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.tableName}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: title
+            AttributeType: S
+          - AttributeName: jp
+            AttributeType: S
+          - AttributeName: en
+            AttributeType: S
+          - AttributeName: kana
+            AttributeType: S
+          - AttributeName: hiragana
+            AttributeType: S
+          - AttributeName: romaji
+            AttributeType: S
+          - AttributeName: katakana
+            AttributeType: S
+          - AttributeName: kanji
+            AttributeType: S
+          - AttributeName: pictureId
+            AttributeType: S
+          - AttributeName: examples
+            AttributeType: SS
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
+functions:
+  flashcard:
+    handler: src/card.handler
+    description: Japanese Flashcards project get card
+    name: ${sls:stage}-${self:service}-card
+    environment:
+      DDB_TABLE_NAME:
+        Ref: FlashcardsTable
+    events:
+      - httpApi:
+          method: POST
+          path: "/card/{cardId}"
+
+  play:
+    handler: src/play.handler
+    description: Japanese Flashcards project play audio
+    name: ${sls:stage}-${self:service}-play
+    environment:
+      DDB_TABLE_NAME:
+        Ref: FlashcardsTable
+    events:
+      - httpApi:
+          method: POST
+          path: "/play/{cardId}"

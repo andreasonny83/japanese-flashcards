@@ -1,0 +1,77 @@
+[
+  {
+    "id": "10000",
+    "title": "0",
+    "pictureId": "10000",
+    "jp": "れい",
+    "kanji": "零",
+    "hiragana": "れい",
+    "katakana": "",
+    "romaji": "rei",
+    "examples": ["11000", "12000"]
+  },
+  {
+    "id": "11000",
+    "en": "today's cold is below zero.",
+    "jp": "今日の寒さはれいど以下だ。",
+    "kana": "きょうのさむさはれいどいかだ。",
+    "romaji": "kyou no samusa wa reido ika da."
+  },
+  {
+    "id": "12000",
+    "en": "the temperature fell below zero last night.",
+    "jp": "さくばんはれいど以下に下がった。",
+    "kana": "さくばんはれいどいかにさがった。",
+    "romaji": "sakuban wa reido ika ni sagatta."
+  },
+  {
+    "id": "10001",
+    "title": "1",
+    "pictureId": "10001",
+    "jp": "一",
+    "kanji": "一",
+    "hiragana": "いち",
+    "katakana": "",
+    "romaji": "ichi",
+    "examples": ["11001", "12001"]
+  },
+  {
+    "id": "11001",
+    "en": "one taiyaki please.",
+    "jp": "たい焼き一匹ください。",
+    "kana": "たいやきいっぴきください。",
+    "romaji": "taiyaki ippiki kudasai."
+  },
+  {
+    "id": "12001",
+    "en": "I studied Japanese all week long.",
+    "jp": "一週間ずっと日本語を勉強しました。",
+    "kana": "いっしゅうかんずっとにほんごをべんきょうしました。",
+    "romaji": "isshuukan zutto nihongo o benkyou shimashita."
+  },
+  {
+    "id": "10002",
+    "title": "2",
+    "pictureId": "10002",
+    "jp": "二",
+    "kanji": "二",
+    "hiragana": "に",
+    "katakana": "",
+    "romaji": "ni",
+    "examples": ["11002", "12002"]
+  },
+  {
+    "id": "11002",
+    "en": "my child is 2 years old.",
+    "jp": "私の子どもは二才です。",
+    "kana": "わたしのこどもはにさいです。",
+    "romaji": "watashi no kodomo wa ni sai desu."
+  },
+  {
+    "id": "12002",
+    "en": "I go shopping twice a week.",
+    "jp": "私は一週間に二回買い物に行きます。",
+    "kana": "わたしはいっしゅうかんににかいかいものにいきます。",
+    "romaji": "watashi wa isshuukan ni nikai kaimono ni ikimasu."
+  }
+]

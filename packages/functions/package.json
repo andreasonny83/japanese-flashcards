@@ -1,0 +1,22 @@
+{
+  "name": "functions",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "deploy": "sls deploy --region us-east-1 --stage prod",
+    "sls:remove": "sls remove --region us-east-1 --stage prod",
+    "start": "sls offline start --printOutput --region us-east-1 --stage prod",
+    "dev": "SLS_DEBUG=* nodemon --exec \"yarn start\"",
+    "logs": "sls logs --region us-east-1 --stage prod --function flashcard --tail",
+    "createData": "USERS_TABLE=prod-japanese-flashcards-functions-table REGION=us-east-1 node utils/create-initial-data.js"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1046.0"
+  },
+  "devDependencies": {
+    "serverless-offline": "^8.2.0",
+    "serverless-plugin-typescript": "^2.1.0",
+    "serverless-s3-sync": "^1.17.3"
+  }
+}
